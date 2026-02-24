@@ -9,18 +9,18 @@
     name: aide
     state: present
 
-- name: "{{{ rule_title }}} - Check if DB Path in /etc/aide/aide.conf Is Already Set"
+- name: "{{{ rule_title }}} - Check if DB Path in {{{ aide_conf_path }}} Is Already Set"
   ansible.builtin.lineinfile:
-    path: /etc/aide/aide.conf
+    path: {{{ aide_conf_path }}}
     regexp: ^#?(\s*)(database=)(.*)$
     state: absent
   check_mode: true
   changed_when: false
   register: database_replace
 
-- name: "{{{ rule_title }}} - Check if DB Out Path in /etc/aide/aide.conf Is Already Set"
+- name: "{{{ rule_title }}} - Check if DB Out Path in {{{ aide_conf_path }}} Is Already Set"
   ansible.builtin.lineinfile:
-    path: /etc/aide/aide.conf
+    path: {{{ aide_conf_path }}}
     regexp: ^#?(\s*)(database_out=)(.*)$
     state: absent
   check_mode: true
@@ -29,31 +29,31 @@
 
 - name: "{{{ rule_title }}} - Fix DB Path in Config File if Necessary"
   ansible.builtin.lineinfile:
-    path: /etc/aide/aide.conf
+    path: {{{ aide_conf_path }}}
     regexp: ^#?(\s*)(database)(\s*)=(\s*)(.*)$
-    line: \2\3=\4file:/var/lib/aide/aide.db
+    line: \2\3=\4file:{{{ aide_db_path }}}
     backrefs: true
   when: database_replace.found > 0
 
 - name: "{{{ rule_title }}} - Fix DB Out Path in Config File if Necessary"
   ansible.builtin.lineinfile:
-    path: /etc/aide/aide.conf
+    path: {{{ aide_conf_path }}}
     regexp: ^#?(\s*)(database_out)(\s*)=(\s*)(.*)$
-    line: \2\3=\4file:/var/lib/aide/aide.db.new
+    line: \2\3=\4file:{{{ aide_db_new_path }}}
     backrefs: true
   when: database_out_replace.found > 0
 
 - name: "{{{ rule_title }}} - Ensure the Default DB Path is Added"
   ansible.builtin.lineinfile:
-    path: /etc/aide/aide.conf
-    line: database=file:/var/lib/aide/aide.db
+    path: {{{ aide_conf_path }}}
+    line: database=file:{{{ aide_db_path }}}
     create: true
   when: database_replace.found == 0
 
 - name: "{{{ rule_title }}} - Ensure the Default Out Path is Added"
   ansible.builtin.lineinfile:
-    path: /etc/aide/aide.conf
-    line: database_out=file:/var/lib/aide/aide.db.new
+    path: {{{ aide_conf_path }}}
+    line: database_out=file:{{{ aide_db_new_path }}}
     create: true
   when: database_out_replace.found == 0
 

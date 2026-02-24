@@ -2,8 +2,9 @@
 
 {{{ bash_package_install("aide") }}}
 
-AIDE_CONFIG=/etc/aide/aide.conf
-DEFAULT_DB_PATH=/var/lib/aide/aide.db
+AIDE_CONFIG={{{ aide_conf_path }}}
+DEFAULT_DB_PATH={{{ aide_db_path }}}
+DEFAULT_DB_NEW_PATH={{{ aide_db_new_path }}}
 
 # Fix db path in the config file, if necessary
 {{% if product == 'debian13' %}}
@@ -20,7 +21,7 @@ fi
 
 # Fix db out path in the config file, if necessary
 if ! grep -q '^database_out=file:' ${AIDE_CONFIG}; then
-    echo "database_out=file:${DEFAULT_DB_PATH}.new" >> ${AIDE_CONFIG}
+    echo "database_out=file:${DEFAULT_DB_NEW_PATH}" >> ${AIDE_CONFIG}
 fi
 
 /usr/sbin/aideinit -y -f

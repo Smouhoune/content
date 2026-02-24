@@ -31,14 +31,14 @@
 
   <!-- OVAL object to collect directory path for Aide build database directory -->
   <ind:textfilecontent54_object id="object_aide_build_database_dirpath" version="1">
-    <ind:filepath>/etc/aide/aide.conf</ind:filepath>
+    <ind:filepath>{{{ aide_conf_path }}}</ind:filepath>
     <ind:pattern operation="pattern match">^@@define[\s]DBDIR[\s]+(/.*)$</ind:pattern>
     <ind:instance operation="equals" datatype="int">1</ind:instance>
   </ind:textfilecontent54_object>
 
   <!-- OVAL object to collect filename for Aide build database -->
   <ind:textfilecontent54_object id="object_aide_operational_database_filepath" version="1">
-    <ind:filepath>/etc/aide/aide.conf</ind:filepath>
+    <ind:filepath>{{{ aide_conf_path }}}</ind:filepath>
     {{% if product == "debian13" %}}
     <ind:pattern operation="pattern match">^database_in=file:(?:@@{DBDIR}/)?([a-z./]+)$</ind:pattern>
     {{% else %}}
@@ -86,7 +86,7 @@
   </ind:textfilecontent54_test>
 
   <ind:textfilecontent54_object id="object_aide_new_database_config" version="1">
-    <ind:filepath>/etc/aide/aide.conf</ind:filepath>
+    <ind:filepath>{{{ aide_conf_path }}}</ind:filepath>
     <ind:pattern operation="pattern match">^database_out=file:@@{DBDIR}/([a-z.]+)$</ind:pattern>
     <!-- From aide.conf(5) - "If there are multiple database_out lines, then the first one is used" =>
                   therefore we will retrieve only the first instance -->
@@ -99,7 +99,7 @@
   </ind:textfilecontent54_test>
 
   <ind:textfilecontent54_object id="object_aide_new_database_config_no_dbdir" version="1">
-    <ind:filepath>/etc/aide/aide.conf</ind:filepath>
+    <ind:filepath>{{{ aide_conf_path }}}</ind:filepath>
     <ind:pattern operation="pattern match">^database_out=file:([a-z./]+)$</ind:pattern>
     <!-- From aide.conf(5) - "If there are multiple database_out lines, then the first one is used" =>
                   therefore we will retrieve only the first instance -->
