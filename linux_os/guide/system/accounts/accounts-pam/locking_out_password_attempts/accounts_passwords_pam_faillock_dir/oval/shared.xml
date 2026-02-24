@@ -1,4 +1,4 @@
-{{% set default_dir = "/var/run/faillock" %}}
+{{% set default_dir = pam_faillock_default_dir %}}
 <def-group>
       <definition class="compliance" id="{{{ rule_id }}}" version="5">
             {{{ oval_metadata(" Persist lockout account after reboot", rule_title=rule_title) }}}

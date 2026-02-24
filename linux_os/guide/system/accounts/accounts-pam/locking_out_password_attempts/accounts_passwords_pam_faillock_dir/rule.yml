@@ -42,7 +42,7 @@ ocil_clause: 'the "dir" option is not set to a non-default documented tally log 
 ocil: |-
     To ensure the tally directory is configured correctly, run the following command:
     <pre>$ sudo grep 'dir =' /etc/security/faillock.conf</pre>
-    The output should show that dir is set to something other than "/var/run/faillock"
+    The output should show that dir is set to something other than "{{{ pam_faillock_default_dir }}}"
 
 fixtext: |-
     To configure {{{ full_name }}} to persist locked out accounts after reboot using
