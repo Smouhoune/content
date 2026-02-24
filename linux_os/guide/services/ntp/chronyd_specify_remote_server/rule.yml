@@ -20,9 +20,9 @@ description: |-
     server 0.pool.ntp.org</pre>
     When using <tt>confdir</tt>, create <tt>.conf</tt> files in the specified directory:
     <pre># In {{{ chrony_conf_path }}}:
-    confdir /etc/chrony/conf.d
+    confdir {{{ chrony_d_path.rstrip("/") }}}
 
-    # In /etc/chrony/conf.d/ntp-servers.conf:
+    # In {{{ chrony_d_path }}}ntp-servers.conf:
     pool 1.pool.ntp.org</pre>
     Multiple servers may be configured.
 
