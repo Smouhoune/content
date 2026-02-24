@@ -1,0 +1,10 @@
+default:
+  aide_db_path: "/var/lib/aide/aide.db.gz"
+  aide_db_new_path: "/var/lib/aide/aide.db.new.gz"
+
+overrides:
+{{% set product_families = families | default([]) %}}
+{{% if "debian-like" in product_families or "sle" in product or "slmicro" in product %}}
+  aide_db_path: "/var/lib/aide/aide.db"
+  aide_db_new_path: "/var/lib/aide/aide.db.new"
+{{% endif %}}

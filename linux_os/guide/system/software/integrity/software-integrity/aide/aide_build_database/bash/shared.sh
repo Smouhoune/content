@@ -5,10 +5,5 @@ zypper -q --no-remote ref
 {{% endif %}}
 
 {{{ bash_package_install("aide") }}}
-{{% if 'sle' in product or 'slmicro' in product %}}
-/usr/bin/aide --init
-/bin/cp -p /var/lib/aide/aide.db.new /var/lib/aide/aide.db
-{{% else %}}
-/usr/sbin/aide --init
-/bin/cp -p /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
-{{% endif %}}
+{{{ aide_bin_path }}} --init
+/bin/cp -p {{{ aide_db_new_path }}} {{{ aide_db_path }}}

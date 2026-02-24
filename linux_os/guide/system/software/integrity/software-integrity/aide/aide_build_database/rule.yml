@@ -11,20 +11,12 @@ description: |-
     <pre>$ sudo {{{ aide_bin_path }}} --init</pre>
     {{% endif %}}
     By default, the database will be written to the file
-    {{% if 'ubuntu' in product or 'sle' in product or 'slmicro' in product or 'debian' in product %}}
-    <tt>/var/lib/aide/aide.db.new</tt>.
-    {{% else %}}
-    <tt>/var/lib/aide/aide.db.new.gz</tt>.
-    {{% endif %}}
-    Storing the database, the configuration file <tt>/etc/aide.conf</tt>, and the binary
+    <tt>{{{ aide_db_new_path }}}</tt>.
+    Storing the database, the configuration file <tt>{{{ aide_conf_path }}}</tt>, and the binary
     <tt>{{{ aide_bin_path }}}</tt>
     (or hashes of these files), in a secure location (such as on read-only media) provides additional assurance about their integrity.
     The newly-generated database can be installed as follows:
-    {{% if 'ubuntu' in product or 'sle' in product or 'slmicro' in product or 'debian' in product %}}
-    <pre>$ sudo cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db</pre>
-    {{% else %}}
-    <pre>$ sudo cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz</pre>
-    {{% endif %}}
+    <pre>$ sudo cp {{{ aide_db_new_path }}} {{{ aide_db_path }}}</pre>
     To initiate a manual check, run the following command:
     <pre>$ sudo {{{ aide_bin_path }}} --check</pre>
     If this check produces any unexpected output, investigate.
@@ -40,7 +32,7 @@ warnings:
         After applying system updates, run the following commands to regenerate the AIDE database:
         <pre>$ sudo {{{ aide_bin_path }}} --init</pre>
         Then replace the existing database:
-        <pre>$ sudo cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz</pre>
+        <pre>$ sudo cp {{{ aide_db_new_path }}} {{{ aide_db_path }}}</pre>
         Failure to regenerate the AIDE database after updates will result in false positive alerts
         for legitimate system changes introduced by the update process.
 

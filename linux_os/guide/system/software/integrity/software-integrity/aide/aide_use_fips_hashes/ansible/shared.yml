@@ -11,7 +11,7 @@
 
 -   name: "{{{ rule_title }}} - Set-fact aide config file and forbidden hashes"
     ansible.builtin.set_fact:
-        aide_conf: "/etc/aide.conf"
+        aide_conf: "{{{ aide_conf_path }}}"
         forbidden_hashes:
             - sha1
             - rmd160
