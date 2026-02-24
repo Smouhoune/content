@@ -13,6 +13,10 @@ from .constants import (DEFAULT_PRODUCT, product_directories,
                         DEFAULT_DCONF_GDM_DIR,
                         DEFAULT_AIDE_CONF_PATH,
                         DEFAULT_AIDE_BIN_PATH,
+                        DEFAULT_AIDE_DB_PATH,
+                        DEFAULT_AIDE_DB_NEW_PATH,
+                        DEFAULT_AIDE_DB_PATH_UNCOMPRESSED,
+                        DEFAULT_AIDE_DB_NEW_PATH_UNCOMPRESSED,
                         DEFAULT_AUDIT_WATCHES_STYLE,
                         DEFAULT_RSYSLOG_CAFILE,
                         DEFAULT_SSH_DISTRIBUTED_CONFIG,
@@ -98,6 +102,22 @@ def _get_implied_properties(existing_properties):
 
     if "aide_bin_path" not in existing_properties:
         result["aide_bin_path"] = DEFAULT_AIDE_BIN_PATH
+
+    is_uncompressed_aide_db_layout = (
+        "debian-like" in existing_properties.get("families", [])
+        or existing_properties.get("product", "").startswith(("sle", "slmicro"))
+    )
+    if "aide_db_path" not in existing_properties:
+        if is_uncompressed_aide_db_layout:
+            result["aide_db_path"] = DEFAULT_AIDE_DB_PATH_UNCOMPRESSED
+        else:
+            result["aide_db_path"] = DEFAULT_AIDE_DB_PATH
+
+    if "aide_db_new_path" not in existing_properties:
+        if is_uncompressed_aide_db_layout:
+            result["aide_db_new_path"] = DEFAULT_AIDE_DB_NEW_PATH_UNCOMPRESSED
+        else:
+            result["aide_db_new_path"] = DEFAULT_AIDE_DB_NEW_PATH
 
     if "audit_watches_style" not in existing_properties:
         result["audit_watches_style"] = DEFAULT_AUDIT_WATCHES_STYLE
